@@ -1,0 +1,35 @@
+{
+  "name": "new",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrent \"npm run server\" \"npm run lite\"",
+    "server": "node dest/server/server.js",
+    "lite": "lite-server"
+  },
+  "keywords": [],
+  "author": "Sondre Eide Vik",
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "2.0.0-beta.9",
+    "es6-promise": "3.1.2",
+    "es6-shim": "0.33.3",
+    "express": "4.13.3",
+    "gulp-concat": "2.6.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "^5.0.0-beta.2",
+    "systemjs": "^0.19.24",
+    "zone.js": "0.5.15"
+  },
+  "devDependencies": {
+    "concurrently": "^1.0.0",
+    "del": "2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "2.6.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-typescript": "^2.12.1",
+    "run-sequence": "1.1.5"
+  }
+}
