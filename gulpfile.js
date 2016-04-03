@@ -70,7 +70,7 @@ gulp.task('build:lib', function(){
         .pipe(gulp.dest(config.dist.lib));
 });
 
-gulp.task('build:app', function() {
+gulp.task('build:client', function() {
     return gulp.src(config.source.client)
                .pipe(sourcemaps.init())
                .pipe(ts(ts.createProject(config.tsProject.client)))
@@ -81,7 +81,7 @@ gulp.task('build:app', function() {
 });
 // build all
 gulp.task('build', function(callback){
-    runSequence('clean', 'build:server', 'build:lib', 'build:html', 'build:app', callback);
+    runSequence('clean', 'build:server', 'build:lib', 'build:html', 'build:client', callback);
 });
 
 //serve
