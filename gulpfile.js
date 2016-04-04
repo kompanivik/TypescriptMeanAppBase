@@ -36,6 +36,15 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
+// ////////////////////////////////////////////////
+// Log Errors
+// // /////////////////////////////////////////////
+
+function errorlog(err){
+	console.error(err.message);
+	this.emit('end');
+}
+
 //SERVER
 gulp.task('clean', function(){
     return del('dist')
@@ -46,6 +55,7 @@ gulp.task('build:server', function() {
                 .pipe(sourcemaps.init())
                 .pipe(ts(ts.createProject(config.tsProject.server)))
                 .js
+                .on('error', errorlog)
                 // .pipe(concat('server.js'))
                 .pipe(sourcemaps.write())
                 .pipe(gulp.dest(config.dist.server))
@@ -75,6 +85,7 @@ gulp.task('build:client', function() {
                .pipe(sourcemaps.init())
                .pipe(ts(ts.createProject(config.tsProject.client)))
                .js
+               .on('error', errorlog)
                .pipe(sourcemaps.write())
                .pipe(gulp.dest(config.dist.client))
                .pipe(reload({stream:true}));
