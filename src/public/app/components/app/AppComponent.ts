@@ -10,7 +10,7 @@ import {AboutComponent} from '../about/AboutComponent'
 ])
 @Component({
     selector: 'my-app',
-    template: '<router-outlet></router-outlet>',
+    templateUrl: 'app/components/app/AppComponent.html',
     directives: [ROUTER_DIRECTIVES]
 })
 export class AppComponent { 

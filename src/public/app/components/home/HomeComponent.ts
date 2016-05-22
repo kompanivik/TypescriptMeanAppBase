@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core'
 
 @Component({
-    template: '<h1>{{titleName}}</h1>',
+    templateUrl: 'app/components/home/HomeComponent.html',
     selector: 'home'
 })
 export class HomeComponent implements OnInit{

@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrent \"npm run server\" \"npm run lite\"",
-    "server": "node dest/server/server.js",
-    "lite": "lite-server"
+    "start": "node dist/server.js "
   },
   "keywords": [],
   "author": "Sondre Eide Vik",
   "license": "ISC",
   "dependencies": {
     "angular2": "2.0.0-beta.12",
+    "body-parser": "^1.15.1",
     "es6-promise": "3.1.2",
     "es6-shim": "0.35.0",
     "express": "4.13.3",
+    "path": "^0.12.7",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "^0.19.24",

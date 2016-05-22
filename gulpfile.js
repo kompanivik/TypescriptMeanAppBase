@@ -1,19 +1,22 @@
 // config
 var config = {
     source: {
-        server: './src/server/**/*.ts',
-        client: './src/client/**/*.ts',
-        html: './src/client/**/*.html'
+        server: './src/**/*.ts',
+        main: './src/server.ts',
+        client: './src/public/**/*.ts',
+        html: './src/public/**/*.html',
+        views: './src/views/**/*.ejs'
     },
     dist: {
-        server: './dist/server',
-        client: './dist/client',
-        lib: './dist/client/libs'
+        server: './dist',
+        client: './dist/public',
+        lib: './dist/public/libs',
+        views: './dist/views'
     }
     ,
     tsProject: {
-        server: './src/server/tsconfig.json',
-        client: './src/client/tsconfig.json'
+        server: './src/tsconfig.json',
+        client: './src/public/tsconfig.json'
     },
     jsNPMDependencies: [
         'angular2/bundles/angular2-polyfills.js',
@@ -51,7 +54,19 @@ gulp.task('clean', function(){
 });
 
 gulp.task('build:server', function() {
-    return gulp.src(config.source.server)
+    return gulp.src(config.source.server, {"ignore": ['./src/public']})
+                .pipe(sourcemaps.init())
+                .pipe(ts(ts.createProject(config.tsProject.server)))
+                .js
+                .on('error', errorlog)
+                // .pipe(concat('server.js'))
+                .pipe(sourcemaps.write())
+                .pipe(gulp.dest(config.dist.server))
+                .pipe(reload({stream:true}));
+});
+
+gulp.task('build:main', function(){
+    return gulp.src(config.source.main)
                 .pipe(sourcemaps.init())
                 .pipe(ts(ts.createProject(config.tsProject.server)))
                 .js
@@ -66,9 +81,15 @@ gulp.task('build:server', function() {
 
 gulp.task('build:html', function(){
        
-   //let's copy our index into dest/client
    return gulp.src(config.source.html)
               .pipe(gulp.dest(config.dist.client))
+              .pipe(reload({stream:true}));
+});
+
+gulp.task('build:views', function(){
+       
+   return gulp.src(config.source.views)
+              .pipe(gulp.dest(config.dist.views))
               .pipe(reload({stream:true}));
 });
 
@@ -80,7 +101,7 @@ gulp.task('build:lib', function(){
         .pipe(gulp.dest(config.dist.lib));
 });
 
-gulp.task('build:client', function() {
+gulp.task('build:public', function() {
     return gulp.src(config.source.client)
                .pipe(sourcemaps.init())
                .pipe(ts(ts.createProject(config.tsProject.client)))
@@ -92,7 +113,7 @@ gulp.task('build:client', function() {
 });
 // build all
 gulp.task('build', function(callback){
-    runSequence('clean', 'build:server', 'build:lib', 'build:html', 'build:client', callback);
+    runSequence('clean', 'build:main', 'build:server', 'build:lib', 'build:html', 'build:views', 'build:public', callback);
 });
 
 //serve
@@ -100,7 +121,8 @@ gulp.task('build', function(callback){
 gulp.task('serve', function() {
     browserSync({
         server: {
-            baseDir: './dist/client/'
+            baseDir: './dist/public',
+            
         }
     });
 });
@@ -111,7 +133,7 @@ gulp.task('serve', function() {
 
 gulp.task ('watch', function(){
 	gulp.watch(config.source.server, ['build:server']);
-    gulp.watch(config.source.client, ['build:client']);
+    gulp.watch(config.source.client, ['build:public']);
   	gulp.watch(config.source.html, ['build:html']);
 });
 
