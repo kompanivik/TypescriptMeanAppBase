@@ -1,5 +1,4 @@
 /// <reference path="../typings/tsd.d.ts" />
-/// <reference path="./routes/index" />
 import express = require('express');
 import path = require('path');
 import bodyParser = require('body-parser');
@@ -33,11 +32,11 @@ app.use((req, res, next) => {
     err.message = '404';
     next(err);
 }); 
-var renderIndex = (req: express.Request, res: express.Response) => {
+/*var renderIndex = (req: express.Request, res: express.Response) => {
     res.render('index', {title: 'meantype'});
-}
+}*/
  
-app.get('/', renderIndex);
+// app.get('/', renderIndex);
  
 var server = app.listen(port, () => {
     var host = server.address().address;
